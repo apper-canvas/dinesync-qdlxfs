@@ -176,7 +176,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
                 activeCategory === category.id 
                   ? 'bg-primary text-white' 
                   : 'bg-surface-100 dark:bg-surface-700 text-surface-700 dark:text-surface-300 hover:bg-surface-200 dark:hover:bg-surface-600'
-              }`}
+              } text-black`}
             >
               {category.name}
             </button>
@@ -219,7 +219,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
                   {!selectionMode ? (
                     <div className="flex flex-wrap gap-2">
                       {item.dietaryTags.map((tag) => (
-                        <span key={tag} className="inline-block px-2 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary-dark dark:bg-primary/20">{tag}</span>
+                      <span key={tag} className="inline-block px-2 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary-dark dark:bg-primary/20 text-black">{tag}</span>
                       ))}
                     </div>
                   ) : (
