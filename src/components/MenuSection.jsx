@@ -138,6 +138,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
 
   // Handle menu item click to show detail modal
   const handleMenuItemClick = (item) => {
+    console.log("Menu item clicked:", item);
     setShowModal(true);
     setSelectedItem(item);
   };
@@ -145,6 +146,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
   // Handle adding menu item to order when not in selection mode
   const handleAddMenuItem = (item) => {
     toast.success(`Added ${item.name} to your order`, {
+      autoClose: 3000
       position: "top-right",
     });
   };
@@ -187,6 +189,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
               animate={{ opacity: 1, y: 0 }} 
               exit={{ opacity: 0, scale: 0.95 }} 
               transition={{ duration: 0.3 }}
+              layout
               whileHover={{ y: -5, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
               onClick={() => handleMenuItemClick(item)}
             >
@@ -235,13 +238,13 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
 
       {/* Menu Item Detail Modal */}
       <AnimatePresence>
-        {selectedItem && showModal && (
+        {showModal && selectedItem && (
           <MenuItemDetailModal
             item={selectedItem}
             onClose={() => setShowModal(false)}
             selectionMode={selectionMode}
-            onAddToOrder={(item) => selectionMode ? onAddItem && onAddItem(item) : handleAddMenuItem(item)} />
-        )}
+            onAddToOrder={(item) => selectionMode ? (onAddItem && onAddItem(item)) : handleAddMenuItem(item)} 
+          />)}
       </AnimatePresence>
       </div>
     </section>

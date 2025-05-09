@@ -24,7 +24,10 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {}, selection
     
     onAddToOrder(itemWithQuantity);
     if (!selectionMode) {
-      toast.success(`Added ${quantity} ${quantity > 1 ? 'items' : 'item'} to your order`);
+      toast.success(`Added ${quantity} ${quantity > 1 ? 'items' : 'item'} to your order`, {
+        position: "top-right",
+        autoClose: 3000
+      });
     }
     onClose();
   };
@@ -35,14 +38,14 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {}, selection
 
   return (
     <motion.div
-      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
       <motion.div 
-        className="bg-white dark:bg-surface-800 rounded-xl shadow-lg max-w-3xl w-full max-h-[90vh] overflow-hidden"
+        className="bg-white dark:bg-surface-800 rounded-xl shadow-lg max-w-3xl w-full max-h-[90vh] overflow-auto"
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
@@ -51,11 +54,11 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {}, selection
         <div className="relative h-64">
           <img 
             src={item.imageUrl} 
-            alt={item.name}
+            src={item.imageUrl}
             className="w-full h-full object-cover"
-          />
+            className="w-full h-full object-cover" 
           <button 
-            className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+          <button
             onClick={onClose}
           >
             <XIcon className="w-5 h-5" />
@@ -90,7 +93,7 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {}, selection
           </div>
 
           <button onClick={handleAddToOrder} className="w-full btn btn-primary py-3 flex items-center justify-center">
-            <ShoppingBagIcon className="w-5 h-5 mr-2" /> Add to Order (${(item.price * quantity).toFixed(2)})
+            <ShoppingBagIcon className="w-5 h-5 mr-2" /> ADD TO ORDER (${(item.price * quantity).toFixed(2)})
           </button>
         </div>
       </motion.div>
