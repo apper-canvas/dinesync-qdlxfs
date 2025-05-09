@@ -332,9 +332,6 @@ const MainFeature = () => {
               key="menu-selection"
               className="space-y-6"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            >
               <div className="flex items-center justify-between">
                 <button 
                   onClick={() => setShowMenuSelection(false)} 

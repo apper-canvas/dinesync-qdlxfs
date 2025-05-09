@@ -147,10 +147,12 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
   const handleAddMenuItem = (item) => {
     // Add item to cart (would normally dispatch to store or context)
     // For now, just show a success toast
-    console.log("Adding to cart:", item.name, "Quantity:", item.quantity);
     toast.success(`Added ${item.name} to your order`, {
       autoClose: 3000,
-      position: "top-right"
+      position: "top-right",
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true
     });
   };
   

@@ -58,6 +58,7 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {}, selection
             className="w-full h-full object-cover"
           />
           <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/80 dark:bg-surface-800/80 rounded-full text-surface-800 dark:text-surface-100 hover:bg-white dark:hover:bg-surface-700">
+          <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/80 dark:bg-surface-800/80 rounded-full text-surface-800 dark:text-surface-100 hover:bg-white dark:hover:bg-surface-700">
             <XIcon className="w-5 h-5" />
           </button>
           
@@ -90,8 +91,14 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {}, selection
             </div>
           </div>
 
+          <div className="mt-4 p-3 bg-surface-50 dark:bg-surface-700 rounded-lg mb-4">
+            <div className="flex justify-between items-center text-sm font-medium">
+              <span>Total for {quantity} {quantity > 1 ? 'items' : 'item'}:</span>
+              <span className="text-lg font-bold text-primary">${(item.price * quantity).toFixed(2)}</span>
+            </div>
+          </div>
           <button onClick={handleAddToOrder} className="w-full btn btn-primary py-3 flex items-center justify-center">
-            <ShoppingBagIcon className="w-5 h-5 mr-2" /> ADD TO ORDER (${(item.price * quantity).toFixed(2)})
+            <ShoppingBagIcon className="w-5 h-5 mr-2" /> ADD TO PLACE ORDER
           </button>
         </div>
       </motion.div>
