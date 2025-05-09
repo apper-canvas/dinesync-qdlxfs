@@ -146,7 +146,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
   // Handle adding menu item to order when not in selection mode
   const handleAddMenuItem = (item) => {
     toast.success(`Added ${item.name} to your order`, {
-      autoClose: 3000
+      autoClose: 3000,
       position: "top-right",
     });
   };
