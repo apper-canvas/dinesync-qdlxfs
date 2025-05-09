@@ -145,13 +145,12 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
   
   // Handle adding menu item to order when not in selection mode
   const handleAddMenuItem = (item) => {
-    toast.success(`Added ${item.name} to your order`, {
     // Add item to cart (would normally dispatch to store or context)
     // For now, just show a success toast
-    toast.success(`Added ${item.name} to your order`, {
     console.log("Adding to cart:", item.name, "Quantity:", item.quantity);
+    toast.success(`Added ${item.name} to your order`, {
       autoClose: 3000,
-    });
+      position: "top-right"
     });
   };
   
