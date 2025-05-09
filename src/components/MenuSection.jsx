@@ -167,13 +167,12 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
             <motion.div
               key={item.id}
               className="card group"
-              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
               whileHover={{ y: -5, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
               className={`relative ${selectionMode ? 'cursor-pointer' : ''}`}
-              onClick={selectionMode ? () => onAddItem(item) : undefined}
+              className={`card group relative ${selectionMode ? 'cursor-pointer' : ''}`}
             > 
               <div className="flex h-full flex-col relative">
                 <img src={item.imageUrl} alt={item.name} className="h-48 w-full object-cover rounded-t-lg -mx-6 -mt-6 mb-4"/>
@@ -192,8 +191,8 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
                   </div>
                 )}
                 
-                <h3 className="text-xl font-bold mb-2">{item.name}</h3>
-                <p className="text-surface-600 dark:text-surface-400 mb-4 flex-grow">{item.description}</p>
+                <h3 className="text-xl font-bold mb-2 text-surface-800 dark:text-surface-100">{item.name}</h3>
+                <p className="text-surface-600 dark:text-surface-300 mb-4 flex-grow">{item.description}</p>
                 <div className="flex justify-between items-end">
                   {!selectionMode ? (
                     <div className="flex flex-wrap gap-2">
@@ -213,7 +212,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
                       {isItemSelected(item.id) ? 'Add More' : 'Add to Order'}
                     </button>
                   )}
-                  <span className="font-bold text-lg">${item.price.toFixed(2)}</span>
+                  <span className="font-bold text-lg text-surface-800 dark:text-surface-100">${item.price.toFixed(2)}</span>
                 </div>
               </div>
             </motion.div>  
