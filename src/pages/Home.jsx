@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import MainFeature from '../components/MainFeature';
 import LocationMap from '../components/LocationMap';
+import MenuSection from '../components/MenuSection';
 import getIcon from '../utils/iconUtils';
 import { motion } from 'framer-motion';
 
@@ -190,6 +191,11 @@ const Home = () => {
             </motion.div>
           ))}
         </div>
+      </section>
+      
+      {/* Menu Section */}
+      <section className="mt-12 pt-8 border-t border-surface-200 dark:border-surface-700">
+        <MenuSection />
       </section>
       
       {/* Location Map Section */}
