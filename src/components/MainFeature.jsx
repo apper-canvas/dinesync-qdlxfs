@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
+import MenuSection from './MenuSection';
 import getIcon from '../utils/iconUtils';
 
 const MainFeature = () => {
@@ -13,6 +14,8 @@ const MainFeature = () => {
   const PhoneIcon = getIcon('Phone');
   const MessageSquareIcon = getIcon('MessageSquare');
   const ChevronRightIcon = getIcon('ChevronRight');
+  const ShoppingBagIcon = getIcon('ShoppingBag');
+  const ArrowLeftIcon = getIcon('ArrowLeft');
   
   // Form state
   const [formData, setFormData] = useState({
@@ -39,6 +42,12 @@ const MainFeature = () => {
   
   // Success state
   const [isSuccess, setIsSuccess] = useState(false);
+
+  // Selected menu items state
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  // Show menu selection state
+  const [showMenuSelection, setShowMenuSelection] = useState(false);
 
   // Calculate min date (today)
   const today = new Date().toISOString().split('T')[0];
@@ -113,19 +122,68 @@ const MainFeature = () => {
         icon: "🍽️",
         autoClose: 5000
       });
-      
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setIsSuccess(false);
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          date: '',
-          time: '',
-          partySize: 2,
-          specialRequests: ''
-        });
+    }, 1500);
+  };
+
+  // Handle menu selection
+  const handleAddMenuItem = (item) => {
+    // Check if item already exists in selectedItems
+    const exists = selectedItems.find(selectedItem => selectedItem.id === item.id);
+    
+    if (exists) {
+      // If exists, update quantity
+      const updatedItems = selectedItems.map(selectedItem => 
+        selectedItem.id === item.id ? {...selectedItem, quantity: selectedItem.quantity + 1} : selectedItem
+      );
+      setSelectedItems(updatedItems);
+      toast.info(`Added another ${item.name} to your order`, { autoClose: 2000 });
+    } else {
+      // If doesn't exist, add to selectedItems with quantity 1
+      setSelectedItems([...selectedItems, {...item, quantity: 1}]);
+      toast.success(`Added ${item.name} to your order`, { autoClose: 2000 });
+    }
+  };
+
+  // Handle removing menu item
+  const handleRemoveMenuItem = (itemId) => {
+    const item = selectedItems.find(item => item.id === itemId);
+    
+    if (item.quantity > 1) {
+      // Decrease quantity
+      const updatedItems = selectedItems.map(selectedItem => 
+        selectedItem.id === itemId ? {...selectedItem, quantity: selectedItem.quantity - 1} : selectedItem
+      );
+      setSelectedItems(updatedItems);
+      toast.info(`Removed one ${item.name} from your order`, { autoClose: 2000 });
+    } else {
+      // Remove item completely
+      const updatedItems = selectedItems.filter(item => item.id !== itemId);
+      setSelectedItems(updatedItems);
+      toast.error(`Removed ${item.name} from your order`, { autoClose: 2000 });
+    }
+  };
+
+  // Handle finalizing the order
+  const handleFinalizeOrder = () => {
+    toast.success("Your order has been finalized!", {
+      position: "top-right",
+      icon: "✅",
+      autoClose: 5000
+    });
+    
+    // Reset everything after 3 seconds
+    setTimeout(() => {
+      setIsSuccess(false);
+      setShowMenuSelection(false);
+      setSelectedItems([]);
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        date: '',
+        time: '',
+        partySize: 2,
+        specialRequests: ''
       }, 3000);
     }, 1500);
   };
@@ -137,6 +195,16 @@ const MainFeature = () => {
     return new Date(dateString).toLocaleDateString('en-US', options);
   };
   
+  // Calculate total price
+  const calculateTotal = () => {
+    return selectedItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+  };
+
+  // Handle proceeding to menu selection
+  const handleProceedToMenuSelection = () => {
+    setShowMenuSelection(true);
+  };
+
   return (
     <div className="relative">
       <div className="flex items-center mb-6">
@@ -145,10 +213,13 @@ const MainFeature = () => {
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-        {/* Form Column */}
-        <div className="lg:col-span-3">
-          {isSuccess ? (
-            <motion.div 
+        {/* Main Content Column */}
+        <div className="lg:col-span-3 space-y-6">
+          {isSuccess && !showMenuSelection ? (
+            // Success but hasn't proceeded to menu selection yet
+            <motion.div
+              key="success-message"
+              exit={{ opacity: 0, height: 0 }}
               className="card border-2 border-green-500 bg-green-50 dark:bg-green-900/20"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -177,7 +248,88 @@ const MainFeature = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-surface-500 dark:text-surface-400">Party Size:</span>
+                <button
+                  onClick={handleProceedToMenuSelection}
+                  className="mt-6 btn btn-primary py-3 px-6 text-lg font-medium flex items-center justify-center"
+                >
+                  <ShoppingBagIcon className="w-5 h-5 mr-2" />
+                  Add Menu Items to Your Reservation
+                </button>
+              </div>
+            </motion.div>
+          ) : isSuccess && showMenuSelection ? (
+            // Menu selection view
+            <motion.div
+              key="menu-selection"
+              className="space-y-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="flex items-center justify-between">
+                <button 
+                  onClick={() => setShowMenuSelection(false)} 
+                  className="flex items-center text-sm text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light transition-colors"
+                >
+                  <ArrowLeftIcon className="w-4 h-4 mr-1" />
+                  Back to Reservation Details
+                </button>
+                <h3 className="text-xl font-bold">Add Menu Items</h3>
                     <span className="font-medium">{formData.partySize} {formData.partySize === 1 ? 'guest' : 'guests'}</span>
+              
+              {/* Order Summary Card */}
+              <div className="card bg-surface-50 dark:bg-surface-800 border border-surface-200 dark:border-surface-700">
+                <h4 className="font-bold text-lg mb-4">Your Order Summary</h4>
+                
+                {selectedItems.length === 0 ? (
+                  <div className="py-6 text-center text-surface-500 dark:text-surface-400">
+                    <ShoppingBagIcon className="w-12 h-12 mx-auto mb-3 opacity-30" />
+                    <p>Your order is empty. Select items from the menu below.</p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="space-y-3 mb-4">
+                      {selectedItems.map(item => (
+                        <div key={item.id} className="flex justify-between items-center p-3 bg-white dark:bg-surface-700 rounded-lg">
+                          <div className="flex items-center">
+                            <img src={item.imageUrl} alt={item.name} className="w-12 h-12 object-cover rounded-md mr-3" />
+                            <div>
+                              <h5 className="font-medium">{item.name}</h5>
+                              <p className="text-sm text-surface-500 dark:text-surface-400">${item.price.toFixed(2)} × {item.quantity}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center">
+                            <span className="font-medium mr-3">${(item.price * item.quantity).toFixed(2)}</span>
+                            <button 
+                              onClick={() => handleRemoveMenuItem(item.id)}
+                              className="p-1 text-surface-500 hover:text-red-500 transition-colors"
+                              aria-label="Remove item"
+                            >
+                              <XIcon className="w-5 h-5" />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="flex justify-between items-center pt-4 border-t border-surface-200 dark:border-surface-700">
+                      <span className="font-bold">Total:</span>
+                      <span className="font-bold text-xl text-primary">${calculateTotal().toFixed(2)}</span>
+                    </div>
+                    
+                    <button
+                      onClick={handleFinalizeOrder}
+                      className="w-full btn btn-primary mt-4 py-3"
+                      disabled={selectedItems.length === 0}
+                    >
+                      Finalize Order
+                    </button>
+                  </>
+                )}
+              </div>
+              
+              {/* Menu Items Selection */}
+              <MenuSection selectionMode={true} onAddItem={handleAddMenuItem} selectedItems={selectedItems} />
                   </div>
                 </div>
               </div>

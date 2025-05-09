@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import getIcon from '../utils/iconUtils';
 
-const MenuSection = () => {
+const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) => {
   const MenuIcon = getIcon('Utensils');
   const FilterIcon = getIcon('Filter');
+  const PlusIcon = getIcon('Plus');
+  const CheckIcon = getIcon('Check');
+  const ShoppingBagIcon = getIcon('ShoppingBag');
   
   // Menu categories
   const categories = [
@@ -118,10 +121,20 @@ const MenuSection = () => {
     ? menuItems 
     : menuItems.filter(item => item.category === activeCategory);
   
+  // Check if item is in the selected items
+  const isItemSelected = (itemId) => {
+    return selectedItems.some(item => item.id === itemId);
+  };
+  
+  // Get item quantity if selected
+  const getItemQuantity = (itemId) => {
+    const item = selectedItems.find(item => item.id === itemId);
+    return item ? item.quantity : 0;
+  };
+  
   return (
     <section id="menu" className="scroll-mt-20">
       <div className="flex items-center mb-6">
-        <MenuIcon className="w-6 h-6 mr-2 text-accent" />
         <h2 className="text-2xl md:text-3xl font-bold">Our Menu</h2>
       </div>
       
@@ -159,21 +172,51 @@ const MenuSection = () => {
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
               whileHover={{ y: -5, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
-            >
-              <div className="flex h-full flex-col">
+              className={`relative ${selectionMode ? 'cursor-pointer' : ''}`}
+              onClick={selectionMode ? () => onAddItem(item) : undefined}
+            > 
+              <div className="flex h-full flex-col relative">
                 <img src={item.imageUrl} alt={item.name} className="h-48 w-full object-cover rounded-t-lg -mx-6 -mt-6 mb-4"/>
+                
+                {/* Selection indicator for selection mode */}
+                {selectionMode && isItemSelected(item.id) && (
+                  <div className="absolute top-2 right-2 bg-primary text-white rounded-full p-1">
+                    <CheckIcon className="w-5 h-5" />
+                  </div>
+                )}
+                
+                {/* Quantity badge if in selection mode and item is selected */}
+                {selectionMode && getItemQuantity(item.id) > 0 && (
+                  <div className="absolute top-2 left-2 bg-primary text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+                    {getItemQuantity(item.id)}
+                  </div>
+                )}
+                
                 <h3 className="text-xl font-bold mb-2">{item.name}</h3>
                 <p className="text-surface-600 dark:text-surface-400 mb-4 flex-grow">{item.description}</p>
                 <div className="flex justify-between items-end">
-                  <div className="flex flex-wrap gap-2">
-                    {item.dietaryTags.map((tag) => (
-                      <span key={tag} className="inline-block px-2 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary-dark dark:bg-primary/20">{tag}</span>
-                    ))}
-                  </div>
+                  {!selectionMode ? (
+                    <div className="flex flex-wrap gap-2">
+                      {item.dietaryTags.map((tag) => (
+                        <span key={tag} className="inline-block px-2 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary-dark dark:bg-primary/20">{tag}</span>
+                      ))}
+                    </div>
+                  ) : (
+                    <button 
+                      className="text-primary hover:text-primary-dark dark:hover:text-primary-light flex items-center text-sm font-medium"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onAddItem(item);
+                      }}
+                    >
+                      <PlusIcon className="w-4 h-4 mr-1" />
+                      {isItemSelected(item.id) ? 'Add More' : 'Add to Order'}
+                    </button>
+                  )}
                   <span className="font-bold text-lg">${item.price.toFixed(2)}</span>
                 </div>
               </div>
-            </motion.div>
+            </motion.div>  
           ))}
         </AnimatePresence>
       </div>
