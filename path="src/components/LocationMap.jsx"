@@ -1,0 +1,120 @@
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import getIcon from '../utils/iconUtils';
+
+const LocationMap = () => {
+  const mapRef = useRef(null);
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const NavigationIcon = getIcon('Navigation');
+  const PhoneIcon = getIcon('Phone');
+  const MailIcon = getIcon('Mail');
+  
+  // Restaurant location details
+  const location = {
+    name: "DineSync Restaurant",
+    address: "123 Culinary Avenue",
+    city: "Foodville",
+    state: "CA",
+    postalCode: "94103",
+    neighborhood: "Gourmet District",
+    phone: "(555) 123-4567",
+    email: "reservations@dinesync.com",
+    coordinates: {
+      lat: 37.7749, // Default to San Francisco coordinates
+      lng: -122.4194
+    }
+  };
+
+  useEffect(() => {
+    // Initialize the map when component mounts
+    if (window.google && mapRef.current && !isMapLoaded) {
+      const map = new window.google.maps.Map(mapRef.current, {
+        center: location.coordinates,
+        zoom: 15,
+        styles: [
+          {
+            featureType: "poi.business",
+            stylers: [{ visibility: "simplified" }]
+          },
+          {
+            featureType: "road",
+            elementType: "labels",
+            stylers: [{ visibility: "on" }]
+          }
+        ],
+        mapTypeControl: false,
+        streetViewControl: true,
+        scrollwheel: false
+      });
+
+      // Add marker for the restaurant location
+      const marker = new window.google.maps.Marker({
+        position: location.coordinates,
+        map: map,
+        title: location.name,
+        animation: window.google.maps.Animation.DROP
+      });
+
+      // Add info window
+      const infoWindow = new window.google.maps.InfoWindow({
+        content: `
+          <div class="p-2">
+            <h3 class="font-bold text-base">${location.name}</h3>
+            <p class="text-sm">${location.address}, ${location.city}, ${location.state} ${location.postalCode}</p>
+          </div>
+        `
+      });
+
+      marker.addListener('click', () => {
+        infoWindow.open(map, marker);
+      });
+
+      setIsMapLoaded(true);
+    }
+  }, [location]);
+
+  // Format full address
+  const fullAddress = `${location.address}, ${location.city}, ${location.state} ${location.postalCode}`;
+  
+  // Create Google Maps directions URL
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(fullAddress)}`;
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 rounded-xl overflow-hidden bg-white dark:bg-surface-800 shadow-card">
+      {/* Map container */}
+      <div className="lg:col-span-3 h-[300px] md:h-[400px]" ref={mapRef}>
+        {!isMapLoaded && (
+          <div className="w-full h-full flex items-center justify-center bg-surface-200 dark:bg-surface-700">
+            <p className="text-surface-600 dark:text-surface-400">Loading map...</p>
+          </div>
+        )}
+      </div>
+      
+      {/* Location details */}
+      <div className="lg:col-span-2 p-6 flex flex-col justify-center">
+        <h3 className="text-2xl font-bold mb-1">Find Us</h3>
+        <p className="text-accent mb-4">{location.neighborhood}</p>
+        
+        <div className="space-y-4 mb-6">
+          <p className="text-surface-800 dark:text-surface-200">{fullAddress}</p>
+          
+          <div className="flex items-center text-surface-600 dark:text-surface-400">
+            <PhoneIcon className="w-5 h-5 mr-2" />
+            <a href={`tel:${location.phone}`} className="hover:text-accent">{location.phone}</a>
+          </div>
+          
+          <div className="flex items-center text-surface-600 dark:text-surface-400">
+            <MailIcon className="w-5 h-5 mr-2" />
+            <a href={`mailto:${location.email}`} className="hover:text-accent">{location.email}</a>
+          </div>
+        </div>
+        
+        <motion.a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary inline-flex items-center" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+          <NavigationIcon className="w-5 h-5 mr-2" /> Get Directions
+        </motion.a>
+      </div>
+    </div>
+  );
+};
+
+export default LocationMap;

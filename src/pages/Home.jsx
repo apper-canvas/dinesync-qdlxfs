@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import MainFeature from '../components/MainFeature';
+import LocationMap from '../components/LocationMap';
 import getIcon from '../utils/iconUtils';
 import { motion } from 'framer-motion';
 
@@ -98,10 +99,11 @@ const Home = () => {
           <div className="bg-accent/10 p-3 rounded-full mr-4">
             <MapPinIcon className="w-6 h-6 text-accent" />
           </div>
-          <div>
+          <div className="flex-1">
             <h3 className="text-lg font-semibold">Location</h3>
-            <p className="text-surface-600 dark:text-surface-400">123 Culinary Ave, Foodville</p>
+            <p className="text-surface-600 dark:text-surface-400">123 Culinary Avenue, Foodville</p>
           </div>
+          <a href="#find-us" className="text-primary hover:text-primary-dark ml-2">View Map</a>
         </div>
         
         <div className="card flex items-center p-5 border-l-4 border-accent">
@@ -189,6 +191,19 @@ const Home = () => {
           ))}
         </div>
       </section>
+      
+      {/* Location Map Section */}
+      <section id="find-us" className="scroll-mt-20">
+        <div className="flex items-center mb-6">
+          <MapPinIcon className="w-6 h-6 mr-2 text-accent" />
+          <h2 className="text-2xl md:text-3xl font-bold">Our Location</h2>
+        </div>
+        
+        <div>
+          <LocationMap />
+        </div>
+      </section>
+      
       
       {/* Reservation Form Section */}
       <section id="reservation" className="scroll-mt-20">
