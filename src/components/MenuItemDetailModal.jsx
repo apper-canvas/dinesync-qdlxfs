@@ -16,13 +16,14 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {}, selection
   };
 
   const handleAddToOrder = () => {
-    // Call parent component's onAddToOrder multiple times based on quantity
+    // Create an item with quantity information
     const itemWithQuantity = {
       ...item,
       quantity: quantity
     };
     
     onAddToOrder(itemWithQuantity);
+    
     if (!selectionMode) {
       toast.success(`Added ${quantity} ${quantity > 1 ? 'items' : 'item'} to your order`, {
         position: "top-right",
@@ -56,11 +57,10 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {}, selection
             src={item.imageUrl}
             className="w-full h-full object-cover"
           />
-          <button
-            onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/80 dark:bg-surface-800/80 rounded-full text-surface-800 dark:text-surface-100 hover:bg-white dark:hover:bg-surface-700"
-          >
+          <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/80 dark:bg-surface-800/80 rounded-full text-surface-800 dark:text-surface-100 hover:bg-white dark:hover:bg-surface-700">
             <XIcon className="w-5 h-5" />
           </button>
+          
         </div>
 
         <div className="p-6">
@@ -83,7 +83,7 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {}, selection
               <button onClick={() => handleQuantityChange(-1)} className="p-2 bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600 text-black dark:text-white">
                 <MinusIcon className="w-5 h-5" />
               </button>
-              <span className="px-4 py-2 font-medium text-black dark:text-white">{quantity}</span>
+              <span className="px-4 py-2 min-w-[40px] text-center font-medium text-black dark:text-white">{quantity}</span>
               <button onClick={() => handleQuantityChange(1)} className="p-2 bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600 text-black dark:text-white">
                 <PlusIcon className="w-5 h-5" />
               </button>
