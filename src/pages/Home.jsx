@@ -92,15 +92,38 @@ const Home = () => {
           >
             Exquisite cuisine in an elegant atmosphere
           </motion.p>
-          <motion.a 
-            href="#reservation"
-            className="btn btn-primary text-lg px-8 py-3 shadow-lg"
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 w-full justify-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
+            <motion.a 
+              href="#reservation"
+              className="btn btn-primary text-lg px-8 py-3 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <CalendarIcon className="w-5 h-5 mr-2" />
+              Book a Table
+            </motion.a>
+            
+            <motion.a 
+              href="#menu"
+              className="btn btn-outline bg-white/80 text-primary hover:bg-white text-lg px-8 py-3 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <UtensilsIcon className="w-5 h-5 mr-2" />
+              View Menu
+            </motion.a>
+            
+            <motion.a 
+              href="#takeout"
+              className="btn btn-secondary text-lg px-8 py-3 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
             Reserve a Table
           </motion.a>
         </div>
@@ -207,7 +230,7 @@ const Home = () => {
       </section>
       
       {/* Menu Section */}
-      <section className="mt-12 pt-8 border-t border-surface-200 dark:border-surface-700">
+      <section id="menu" className="mt-12 pt-8 border-t border-surface-200 dark:border-surface-700 scroll-mt-20">
         <MenuSection />
       </section>
       
@@ -223,7 +246,22 @@ const Home = () => {
         </div>
       </section>
       
-      
+      {/* Takeout Order Section */}
+      <section id="takeout" className="scroll-mt-20 mt-12 pt-8 border-t border-surface-200 dark:border-surface-700">
+        <div className="flex items-center mb-6">
+          <ShoppingBagIcon className="w-6 h-6 mr-2 text-accent" />
+          <h2 className="text-2xl md:text-3xl font-bold">Order Takeout</h2>
+        </div>
+        
+        <div className="card text-center py-8">
+          <h3 className="text-xl font-bold mb-4">Ready to enjoy our cuisine at home?</h3>
+          <p className="text-surface-600 dark:text-surface-400 mb-6 max-w-2xl mx-auto">
+            Order takeout directly from our restaurant and have your favorite dishes ready for pickup in 30-45 minutes.
+          </p>
+          <button className="btn btn-secondary text-lg px-8 py-3 shadow-lg font-medium">Order Now</button>
+        </div>
+      </section>
+
       {/* Reservation Form Section */}
       <section id="reservation" className="scroll-mt-20">
         <MainFeature />
