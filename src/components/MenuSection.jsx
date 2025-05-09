@@ -173,13 +173,14 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
           {filteredItems.map((item) => (
             <motion.div
               key={item.id}
+              className="card"
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
               whileHover={{ y: -5, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
               onClick={() => handleMenuItemClick(item)}
             > 
-              <div className="flex h-full flex-col relative">
+              <div className="flex h-full flex-col relative text-black">
                 <img src={item.imageUrl} alt={item.name} className="h-48 w-full object-cover rounded-t-lg -mx-6 -mt-6 mb-4" />
                 
                 {/* Selection indicator for selection mode */}
@@ -207,7 +208,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
                     </div>
                   ) : (
                     <button 
-                      className="text-black hover:text-primary-dark dark:hover:text-primary-light flex items-center text-sm font-medium"
+                      className="text-black hover:text-primary-dark flex items-center text-sm font-medium"
                       onClick={(e) => {
                         e.stopPropagation();
                         onAddItem(item);
