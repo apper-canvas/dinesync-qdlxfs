@@ -173,12 +173,10 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
           {filteredItems.map((item) => (
             <motion.div
               key={item.id}
-              className="card group"
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
               whileHover={{ y: -5, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
-              className={`card group relative cursor-pointer`}
               onClick={() => handleMenuItemClick(item)}
             > 
               <div className="flex h-full flex-col relative">
@@ -198,8 +196,8 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
                   </div>
                 )}
                 
-                <h3 className="text-xl font-bold mb-2 text-black dark:text-surface-100">{item.name}</h3>
-                <p className="text-black dark:text-surface-300 mb-4 flex-grow">{item.description}</p>
+                <h3 className="text-xl font-bold mb-2 text-black">{item.name}</h3>
+                <p className="text-black mb-4 flex-grow">{item.description}</p>
                 <div className="flex justify-between items-end">
                   {!selectionMode ? (
                     <div className="flex flex-wrap gap-2">
@@ -219,7 +217,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
                       {isItemSelected(item.id) ? 'Add More' : 'Add to Order'}
                     </button>
                   )}
-                  <span className="font-bold text-lg text-black dark:text-surface-100">${item.price.toFixed(2)}</span>
+                  <span className="font-bold text-lg text-black">${item.price.toFixed(2)}</span>
                 </div>
               </div>
             </motion.div>  
