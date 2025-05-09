@@ -138,9 +138,9 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
 
   // Handle menu item click to show detail modal
   const handleMenuItemClick = (item) => {
-    console.log("Menu item clicked:", item);
     setShowModal(true);
     setSelectedItem(item);
+    console.log("Menu item clicked:", item);
   };
   
   // Handle adding menu item to order when not in selection mode
