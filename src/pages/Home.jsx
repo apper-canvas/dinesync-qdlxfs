@@ -5,6 +5,7 @@ import MenuSection from '../components/MenuSection';
 import getIcon from '../utils/iconUtils';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import RatingsReviewsModal from '../components/RatingsReviewsModal';
 import { motion } from 'framer-motion';
 
 const Home = () => {
@@ -15,6 +16,7 @@ const Home = () => {
   const UtensilsIcon = getIcon('Utensils');
   const ChevronDownIcon = getIcon('ChevronDown');
   
+  const [showRatingsModal, setShowRatingsModal] = useState(false);
   const [showHours, setShowHours] = useState(false);
   
   // Sample restaurant data
@@ -61,6 +63,9 @@ const Home = () => {
       {/* Toast Container for notifications */}
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false}
         newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
+      
+      {/* Ratings and Reviews Modal */}
+      <RatingsReviewsModal isOpen={showRatingsModal} onClose={() => setShowRatingsModal(false)} rating={4.8} />
         
       {/* Hero Section */}
       <section className="relative overflow-hidden rounded-2xl h-[50vh] md:h-[60vh] bg-gradient-to-r from-primary-dark to-primary">
@@ -114,14 +119,15 @@ const Home = () => {
           <a href="#find-us" className="text-primary hover:text-primary-dark ml-2">View Map</a>
         </div>
         
-        <div className="card flex items-center p-5 border-l-4 border-accent">
+        <div className="card flex items-center p-5 border-l-4 border-accent cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setShowRatingsModal(true)}>
           <div className="bg-accent/10 p-3 rounded-full mr-4">
             <StarIcon className="w-6 h-6 text-accent" />
           </div>
-          <div>
+          <div className="flex-1">
             <h3 className="text-lg font-semibold">Rating</h3>
-            <p className="text-surface-600 dark:text-surface-400">4.8/5 from 200+ reviews</p>
+            <p className="text-surface-600 dark:text-surface-400">4.8/5 from 200+ reviews</p>            
           </div>
+          <span className="text-primary hover:text-primary-dark ml-2">View Reviews</span>
         </div>
         
         <div className="card flex items-center p-5 border-l-4 border-accent relative">
