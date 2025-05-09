@@ -138,7 +138,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
   // Handle menu item click to show detail modal
   const handleMenuItemClick = (item) => {
     setShowModal(true);
-   };
+    setSelectedItem(item);
   };
   
   return (
