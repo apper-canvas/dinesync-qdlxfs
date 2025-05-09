@@ -126,8 +126,8 @@ const Home = () => {
             >
             Reserve a Table
           </motion.a>
-        </div>
         </motion.div>
+        </div>
       </section>
       
       {/* Restaurant Info Quick Stats */}
