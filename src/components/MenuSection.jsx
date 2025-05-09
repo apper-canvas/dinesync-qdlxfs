@@ -171,7 +171,6 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
               whileHover={{ y: -5, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
-              className={`relative ${selectionMode ? 'cursor-pointer' : ''}`}
               className={`card group relative ${selectionMode ? 'cursor-pointer' : ''}`}
             > 
               <div className="flex h-full flex-col relative">
@@ -191,8 +190,8 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
                   </div>
                 )}
                 
-                <h3 className="text-xl font-bold mb-2 text-surface-800 dark:text-surface-100">{item.name}</h3>
-                <p className="text-surface-600 dark:text-surface-300 mb-4 flex-grow">{item.description}</p>
+                <h3 className="text-xl font-bold mb-2 text-black dark:text-surface-100">{item.name}</h3>
+                <p className="text-black dark:text-surface-300 mb-4 flex-grow">{item.description}</p>
                 <div className="flex justify-between items-end">
                   {!selectionMode ? (
                     <div className="flex flex-wrap gap-2">
@@ -202,7 +201,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
                     </div>
                   ) : (
                     <button 
-                      className="text-primary hover:text-primary-dark dark:hover:text-primary-light flex items-center text-sm font-medium"
+                      className="text-black hover:text-primary-dark dark:hover:text-primary-light flex items-center text-sm font-medium"
                       onClick={(e) => {
                         e.stopPropagation();
                         onAddItem(item);
@@ -212,7 +211,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
                       {isItemSelected(item.id) ? 'Add More' : 'Add to Order'}
                     </button>
                   )}
-                  <span className="font-bold text-lg text-surface-800 dark:text-surface-100">${item.price.toFixed(2)}</span>
+                  <span className="font-bold text-lg text-black dark:text-surface-100">${item.price.toFixed(2)}</span>
                 </div>
               </div>
             </motion.div>  
