@@ -16,6 +16,7 @@ const MainFeature = () => {
   const ChevronRightIcon = getIcon('ChevronRight');
   const ShoppingBagIcon = getIcon('ShoppingBag');
   const ArrowLeftIcon = getIcon('ArrowLeft');
+  const CheckSquareIcon = getIcon('CheckSquare');
   
   // Form state
   const [formData, setFormData] = useState({
@@ -51,6 +52,9 @@ const MainFeature = () => {
 
   // Calculate min date (today)
   const today = new Date().toISOString().split('T')[0];
+
+  // Show confirmation state
+  const [showConfirmation, setShowConfirmation] = useState(false);
   
   // Handle form input changes
   const handleChange = (e) => {
@@ -170,11 +174,13 @@ const MainFeature = () => {
       icon: "✅",
       autoClose: 5000
     });
+
+    // Show confirmation instead of resetting
+    setShowConfirmation(true);
     
-    // Reset everything after 3 seconds
+    // Reset form state but keep the data for display
     setTimeout(() => {
-      setIsSuccess(false);
-      setShowMenuSelection(false);
+      // Keep the data to display in the confirmation
       setSelectedItems([]);
       setFormData({
         name: '',
@@ -184,8 +190,15 @@ const MainFeature = () => {
         time: '',
         partySize: 2,
         specialRequests: ''
-      }, 3000);
-    }, 1500);
+      });
+    }, 8000);
+  };
+
+  // Handle starting a new reservation
+  const handleStartNewReservation = () => {
+    setShowConfirmation(false);
+    setShowMenuSelection(false);
+    setIsSuccess(false);
   };
   
   // Format date for display
@@ -261,7 +274,59 @@ const MainFeature = () => {
                 </button>
               </div>
             </motion.div>
-          ) : isSuccess && showMenuSelection ? (
+          ) : isSuccess && showConfirmation ? (
+            // Order confirmation view
+            <motion.div
+              key="order-confirmation"
+              className="card border-2 border-green-500 bg-green-50 dark:bg-green-900/20"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="flex flex-col items-center text-center p-4">
+                <div className="w-16 h-16 bg-green-100 dark:bg-green-800/40 rounded-full flex items-center justify-center mb-4">
+                  <CheckSquareIcon className="w-8 h-8 text-green-600 dark:text-green-400" />
+                </div>
+                <h3 className="text-2xl font-bold mb-2">Order Complete!</h3>
+                <p className="text-surface-600 dark:text-surface-300 mb-6">
+                  Your reservation and menu selections have been confirmed.
+                </p>
+
+                <div className="w-full max-w-2xl mx-auto">
+                  <h4 className="text-lg font-semibold text-left mb-3 flex items-center">
+                    <CalendarIcon className="w-5 h-5 mr-2 text-primary" />
+                    Reservation Details
+                  </h4>
+                  <div className="bg-white dark:bg-surface-800 rounded-lg p-4 mb-6 shadow-sm border border-surface-200 dark:border-surface-700 text-left">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div><span className="text-surface-500 dark:text-surface-400">Name:</span> <span className="font-medium">{formData.name}</span></div>
+                      <div><span className="text-surface-500 dark:text-surface-400">Party Size:</span> <span className="font-medium">{formData.partySize} {formData.partySize === 1 ? 'guest' : 'guests'}</span></div>
+                      <div><span className="text-surface-500 dark:text-surface-400">Date:</span> <span className="font-medium">{formatDate(formData.date)}</span></div>
+                      <div><span className="text-surface-500 dark:text-surface-400">Time:</span> <span className="font-medium">{formData.time}</span></div>
+                    </div>
+                  </div>
+
+                  <h4 className="text-lg font-semibold text-left mb-3 flex items-center">
+                    <ShoppingBagIcon className="w-5 h-5 mr-2 text-primary" />
+                    Menu Selections
+                  </h4>
+                  <div className="bg-white dark:bg-surface-800 rounded-lg p-4 shadow-sm border border-surface-200 dark:border-surface-700 text-left mb-6">
+                    {selectedItems.map(item => (
+                      <div key={item.id} className="flex justify-between items-center py-2 border-b last:border-0 border-surface-100 dark:border-surface-700">
+                        <div>{item.name} <span className="text-surface-500 dark:text-surface-400">× {item.quantity}</span></div>
+                        <div className="font-medium">${(item.price * item.quantity).toFixed(2)}</div>
+                      </div>
+                    ))}
+                    <div className="flex justify-between items-center pt-4 mt-2 border-t border-surface-200 dark:border-surface-700 font-bold">
+                      <span>Total:</span>
+                      <span className="text-xl text-primary">${calculateTotal().toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
+                <button onClick={handleStartNewReservation} className="btn btn-primary mt-2">Make Another Reservation</button>
+              </div>
+            </motion.div>
+          ) : isSuccess && showMenuSelection && !showConfirmation ? (
             // Menu selection view
             <motion.div
               key="menu-selection"
