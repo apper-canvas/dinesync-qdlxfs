@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import getIcon from '../utils/iconUtils';
+import MenuItemDetailModal from './MenuItemDetailModal';
 
 const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) => {
   const MenuIcon = getIcon('Utensils');
@@ -8,6 +9,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
   const PlusIcon = getIcon('Plus');
   const CheckIcon = getIcon('Check');
   const ShoppingBagIcon = getIcon('ShoppingBag');
+  const [selectedItem, setSelectedItem] = useState(null);
   
   // Menu categories
   const categories = [
@@ -131,6 +133,11 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
     const item = selectedItems.find(item => item.id === itemId);
     return item ? item.quantity : 0;
   };
+
+  // Handle menu item click to show detail modal
+  const handleMenuItemClick = (item) => {
+    setSelectedItem(item);
+  };
   
   return (
     <section id="menu" className="scroll-mt-20">
@@ -171,10 +178,11 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
               whileHover={{ y: -5, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
-              className={`card group relative ${selectionMode ? 'cursor-pointer' : ''}`}
+              className={`card group relative cursor-pointer`}
+              onClick={() => handleMenuItemClick(item)}
             > 
               <div className="flex h-full flex-col relative">
-                <img src={item.imageUrl} alt={item.name} className="h-48 w-full object-cover rounded-t-lg -mx-6 -mt-6 mb-4"/>
+                <img src={item.imageUrl} alt={item.name} className="h-48 w-full object-cover rounded-t-lg -mx-6 -mt-6 mb-4" />
                 
                 {/* Selection indicator for selection mode */}
                 {selectionMode && isItemSelected(item.id) && (
@@ -217,6 +225,16 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
             </motion.div>  
           ))}
         </AnimatePresence>
+
+      {/* Menu Item Detail Modal */}
+      <AnimatePresence>
+        {selectedItem && (
+          <MenuItemDetailModal 
+            item={selectedItem} 
+            onClose={() => setSelectedItem(null)} 
+            onAddToOrder={onAddItem} />
+        )}
+      </AnimatePresence>
       </div>
     </section>
   );
