@@ -248,6 +248,10 @@ const MainFeature = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-surface-500 dark:text-surface-400">Party Size:</span>
+                    <span className="font-medium">{formData.partySize} {formData.partySize === 1 ? 'guest' : 'guests'}</span>
+                  </div>
+                </div>
+                
                 <button
                   onClick={handleProceedToMenuSelection}
                   className="mt-6 btn btn-primary py-3 px-6 text-lg font-medium flex items-center justify-center"
@@ -274,8 +278,6 @@ const MainFeature = () => {
                   <ArrowLeftIcon className="w-4 h-4 mr-1" />
                   Back to Reservation Details
                 </button>
-                <h3 className="text-xl font-bold">Add Menu Items</h3>
-                    <span className="font-medium">{formData.partySize} {formData.partySize === 1 ? 'guest' : 'guests'}</span>
               
               {/* Order Summary Card */}
               <div className="card bg-surface-50 dark:bg-surface-800 border border-surface-200 dark:border-surface-700">
@@ -330,8 +332,7 @@ const MainFeature = () => {
               
               {/* Menu Items Selection */}
               <MenuSection selectionMode={true} onAddItem={handleAddMenuItem} selectedItems={selectedItems} />
-                  </div>
-                </div>
+              
               </div>
             </motion.div>
           ) : (
