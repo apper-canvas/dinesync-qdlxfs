@@ -9,6 +9,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
   const PlusIcon = getIcon('Plus');
   const CheckIcon = getIcon('Check');
   const ShoppingBagIcon = getIcon('ShoppingBag');
+  const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   
   // Menu categories
@@ -136,7 +137,8 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
 
   // Handle menu item click to show detail modal
   const handleMenuItemClick = (item) => {
-    setSelectedItem({...item});
+    setShowModal(true);
+   };
   };
   
   return (
@@ -173,14 +175,15 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
           {filteredItems.map((item) => (
             <motion.div
               key={item.id} 
-              className="card cursor-pointer"
+              className="card cursor-pointer overflow-hidden"
               animate={{ opacity: 1, y: 0 }} 
               exit={{ opacity: 0, scale: 0.95 }} 
               transition={{ duration: 0.3 }}
               whileHover={{ y: -5, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
               onClick={() => handleMenuItemClick(item)}
             >
-              <div className="flex h-full flex-col relative"> <img src={item.imageUrl} alt={item.name} className="h-48 w-full object-cover rounded-t-lg -mx-6 -mt-6 mb-4" /> {/* Selection indicator for selection mode */}
+              <div className="flex h-full flex-col relative"> 
+                <img src={item.imageUrl} alt={item.name} className="h-48 w-full object-cover rounded-t-lg -mx-6 -mt-6 mb-4" /> {/* Selection indicator for selection mode */}
                 {selectionMode && isItemSelected(item.id) && (
                   <div className="absolute top-2 right-2 bg-primary text-white rounded-full p-1">
                     <CheckIcon className="w-5 h-5" />
@@ -224,11 +227,11 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
 
       {/* Menu Item Detail Modal */}
       <AnimatePresence>
-        {selectedItem && (
+        {selectedItem && showModal && (
           <MenuItemDetailModal 
             item={selectedItem} 
-            onClose={() => setSelectedItem(null)} 
-            onAddToOrder={(item) => onAddItem && onAddItem(item)} />
+            onClose={() => setShowModal(false)} 
+            onAddToOrder={(item) => selectionMode ? onAddItem && onAddItem(item) : handleAddMenuItem(item)} />
         )}
       </AnimatePresence>
       </div>

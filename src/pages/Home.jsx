@@ -3,6 +3,8 @@ import MainFeature from '../components/MainFeature';
 import LocationMap from '../components/LocationMap';
 import MenuSection from '../components/MenuSection';
 import getIcon from '../utils/iconUtils';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { motion } from 'framer-motion';
 
 const Home = () => {
@@ -20,6 +22,10 @@ const Home = () => {
     {
       id: 1,
       name: "Truffle Risotto",
+      
+      {/* Toast Container for notifications */}
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false}
+        newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
       description: "Creamy arborio rice with wild mushrooms and black truffle",
       price: 22.95,
       imageUrl: "https://images.unsplash.com/photo-1673796374363-75c873580651?auto=format&fit=crop&w=800&q=80",

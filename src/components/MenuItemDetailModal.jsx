@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import getIcon from '../utils/iconUtils';
+import { toast } from 'react-toastify';
 
 const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {} }) => {
   const [quantity, setQuantity] = useState(1);
@@ -20,6 +21,11 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {} }) => {
       for (let i = 0; i < quantity; i++) {
         onAddToOrder(item);
       }
+    } else {
+      // If no onAddToOrder function is provided, show a toast notification
+      toast.success(`Added ${quantity} ${item.name} to your order`, {
+        position: "top-right",
+      });
     }
     onClose();
   };
@@ -46,7 +52,7 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {} }) => {
         <div className="relative h-64">
           <img 
             src={item.imageUrl} 
-            alt={item.name} 
+            alt={item.name}
             className="w-full h-full object-cover"
           />
           <button 
