@@ -23,9 +23,6 @@ const Home = () => {
       id: 1,
       name: "Truffle Risotto",
       
-      {/* Toast Container for notifications */}
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false}
-        newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
       description: "Creamy arborio rice with wild mushrooms and black truffle",
       price: 22.95,
       imageUrl: "https://images.unsplash.com/photo-1673796374363-75c873580651?auto=format&fit=crop&w=800&q=80",
@@ -61,6 +58,10 @@ const Home = () => {
   
   return (
     <div className="space-y-12">
+      {/* Toast Container for notifications */}
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false}
+        newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
+        
       {/* Hero Section */}
       <section className="relative overflow-hidden rounded-2xl h-[50vh] md:h-[60vh] bg-gradient-to-r from-primary-dark to-primary">
         <img 
