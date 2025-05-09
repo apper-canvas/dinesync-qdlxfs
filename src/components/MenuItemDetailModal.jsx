@@ -58,7 +58,6 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {}, selection
             className="w-full h-full object-cover"
           />
           <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/80 dark:bg-surface-800/80 rounded-full text-surface-800 dark:text-surface-100 hover:bg-white dark:hover:bg-surface-700">
-          <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/80 dark:bg-surface-800/80 rounded-full text-surface-800 dark:text-surface-100 hover:bg-white dark:hover:bg-surface-700">
             <XIcon className="w-5 h-5" />
           </button>
           
