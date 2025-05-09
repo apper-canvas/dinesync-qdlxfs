@@ -22,7 +22,7 @@ const Home = () => {
       name: "Truffle Risotto",
       description: "Creamy arborio rice with wild mushrooms and black truffle",
       price: 22.95,
-      imageUrl: "https://images.unsplash.com/photo-1673796374363-75c873580651",
+      imageUrl: "https://images.unsplash.com/photo-1673796374363-75c873580651?auto=format&fit=crop&w=800&q=80",
       dietaryTags: ["Vegetarian", "Gluten-Free"]
     },
     {
@@ -30,7 +30,7 @@ const Home = () => {
       name: "Herb-Crusted Salmon",
       description: "Sustainably-sourced salmon with herb crust and lemon butter sauce",
       price: 28.50,
-      imageUrl: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2",
+      imageUrl: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80",
       dietaryTags: ["Gluten-Free", "Dairy-Free"]
     },
     {
@@ -38,7 +38,7 @@ const Home = () => {
       name: "Braised Short Ribs",
       description: "Slow-cooked short ribs with red wine reduction and root vegetables",
       price: 32.95,
-      imageUrl: "https://images.unsplash.com/photo-1544025162-d76694265947",
+      imageUrl: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
       dietaryTags: ["Paleo"]
     }
   ];

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import getIcon from '../utils/iconUtils';
 
-const MenuItemDetailModal = ({ item, onClose, onAddToOrder }) => {
+const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {} }) => {
   const [quantity, setQuantity] = useState(1);
   const XIcon = getIcon('X');
   const MinusIcon = getIcon('Minus');
@@ -16,8 +16,10 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder }) => {
 
   const handleAddToOrder = () => {
     // Call parent component's onAddToOrder multiple times based on quantity
-    for (let i = 0; i < quantity; i++) {
-      onAddToOrder(item);
+    if (typeof onAddToOrder === 'function') {
+      for (let i = 0; i < quantity; i++) {
+        onAddToOrder(item);
+      }
     }
     onClose();
   };
