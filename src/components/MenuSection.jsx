@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import getIcon from '../utils/iconUtils';
+import { toast } from 'react-toastify';
 import MenuItemDetailModal from './MenuItemDetailModal';
 
 const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) => {
@@ -141,6 +142,13 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
     setSelectedItem(item);
   };
   
+  // Handle adding menu item to order when not in selection mode
+  const handleAddMenuItem = (item) => {
+    toast.success(`Added ${item.name} to your order`, {
+      position: "top-right",
+    });
+  };
+  
   return (
     <section id="menu" className="scroll-mt-20">
       <div className="flex items-center mb-6">
@@ -228,9 +236,10 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
       {/* Menu Item Detail Modal */}
       <AnimatePresence>
         {selectedItem && showModal && (
-          <MenuItemDetailModal 
-            item={selectedItem} 
-            onClose={() => setShowModal(false)} 
+          <MenuItemDetailModal
+            item={selectedItem}
+            onClose={() => setShowModal(false)}
+            selectionMode={selectionMode}
             onAddToOrder={(item) => selectionMode ? onAddItem && onAddItem(item) : handleAddMenuItem(item)} />
         )}
       </AnimatePresence>

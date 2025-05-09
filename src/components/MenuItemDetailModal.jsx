@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import getIcon from '../utils/iconUtils';
 import { toast } from 'react-toastify';
 
-const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {} }) => {
+const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {}, selectionMode = false }) => {
   const [quantity, setQuantity] = useState(1);
   const XIcon = getIcon('X');
   const MinusIcon = getIcon('Minus');
@@ -17,15 +17,14 @@ const MenuItemDetailModal = ({ item, onClose, onAddToOrder = () => {} }) => {
 
   const handleAddToOrder = () => {
     // Call parent component's onAddToOrder multiple times based on quantity
-    if (typeof onAddToOrder === 'function') {
-      for (let i = 0; i < quantity; i++) {
-        onAddToOrder(item);
-      }
-    } else {
-      // If no onAddToOrder function is provided, show a toast notification
-      toast.success(`Added ${quantity} ${item.name} to your order`, {
-        position: "top-right",
-      });
+    const itemWithQuantity = {
+      ...item,
+      quantity: quantity
+    };
+    
+    onAddToOrder(itemWithQuantity);
+    if (!selectionMode) {
+      toast.success(`Added ${quantity} ${quantity > 1 ? 'items' : 'item'} to your order`);
     }
     onClose();
   };
