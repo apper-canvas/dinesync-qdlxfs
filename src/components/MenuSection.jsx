@@ -31,7 +31,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
     {
       id: 1,
       name: "Truffle Risotto",
-      description: "Creamy arborio rice with wild mushrooms and black truffle",
+      description: "Creamy arborio rice slowly cooked with organic vegetable stock, wild porcini mushrooms, shallots, white wine, and finished with shaved black truffle and aged parmesan cheese.",
       price: 22.95,
       imageUrl: "https://images.unsplash.com/photo-1673796374363-75c873580651?auto=format&fit=crop&w=800&q=80",
       category: "main-courses",
@@ -40,7 +40,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
     {
       id: 2,
       name: "Herb-Crusted Salmon",
-      description: "Sustainably-sourced salmon with herb crust and lemon butter sauce",
+      description: "Wild-caught Atlantic salmon fillet coated with a blend of fresh dill, parsley, thyme, and breadcrumbs, pan-seared and served with a light lemon-dill butter sauce and seasonal vegetables.",
       price: 28.50,
       imageUrl: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80",
       category: "main-courses",
@@ -49,7 +49,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
     {
       id: 3,
       name: "Braised Short Ribs",
-      description: "Slow-cooked short ribs with red wine reduction and root vegetables",
+      description: "Grass-fed beef short ribs braised for 8 hours in a rich reduction of Cabernet Sauvignon, beef stock, onions, carrots, celery, and aromatics, served with creamy mashed potatoes and glazed heirloom carrots.",
       price: 32.95,
       imageUrl: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
       category: "main-courses",
@@ -58,7 +58,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
     {
       id: 4,
       name: "Crispy Calamari",
-      description: "Lightly battered calamari served with lemon aioli and marinara sauce",
+      description: "Tender squid rings coated in a light rice flour and semolina batter, flash-fried to perfection, and served with house-made roasted garlic and lemon aioli, spicy marinara sauce, and fresh lemon wedges.",
       price: 16.50,
       imageUrl: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=800&q=80",
       category: "appetizers",
@@ -67,7 +67,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
     {
       id: 5,
       name: "Artisanal Cheese Plate",
-      description: "Selection of local and imported cheeses with honey, nuts, and artisan crackers",
+      description: "Curated selection of local and imported artisanal cheeses including aged cheddar, creamy brie, tangy goat cheese, and blue cheese, served with raw honeycomb, candied walnuts, dried fruits, and house-baked rosemary crackers.",
       price: 19.95,
       imageUrl: "https://images.unsplash.com/photo-1631379578550-d0bbcce7ec7c?auto=format&fit=crop&w=800&q=80",
       category: "appetizers",
@@ -76,7 +76,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
     {
       id: 6,
       name: "Chocolate Lava Cake",
-      description: "Warm chocolate cake with a molten center, served with vanilla bean ice cream",
+      description: "Rich Valrhona dark chocolate cake with a warm molten center, dusted with cocoa powder and served with Madagascar vanilla bean ice cream, fresh berries, and a drizzle of raspberry coulis.",
       price: 12.95,
       imageUrl: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80",
       category: "desserts",
@@ -85,7 +85,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
     {
       id: 7,
       name: "Crème Brûlée",
-      description: "Classic vanilla custard with a caramelized sugar crust",
+      description: "Traditional French custard made with premium vanilla beans, farm-fresh egg yolks, and heavy cream, topped with a hand-torched caramelized sugar crust that cracks perfectly with each spoonful.",
       price: 10.95,
       imageUrl: "https://images.unsplash.com/photo-1615577815766-199347f2e35c?auto=format&fit=crop&w=800&q=80",
       category: "desserts",
@@ -94,7 +94,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
     {
       id: 8,
       name: "Garlic Truffle Fries",
-      description: "Hand-cut fries tossed with garlic, parmesan, and truffle oil",
+      description: "Russet potatoes hand-cut daily, double-fried for extra crispness, then tossed with roasted garlic, aged Parmigiano-Reggiano cheese, fresh parsley, and a light drizzle of imported black truffle oil. Served with house-made garlic aioli.",
       price: 9.95,
       imageUrl: "https://images.unsplash.com/photo-1580959375944-abd7e991f971?auto=format&fit=crop&w=800&q=80",
       category: "sides",
@@ -103,7 +103,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
     {
       id: 9,
       name: "Signature Craft Cocktail",
-      description: "Seasonal craft cocktail with house-made infusions and fresh ingredients",
+      description: "Our bartender's seasonal creation featuring small-batch spirits, house-made infusions with herbs from our garden, fresh-squeezed citrus juices, artisanal bitters, and hand-carved ice. Ask your server for this season's selection.",
       price: 14.00,
       imageUrl: "https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?auto=format&fit=crop&w=800&q=80",
       category: "beverages",
@@ -112,7 +112,7 @@ const MenuSection = ({ selectionMode = false, onAddItem, selectedItems = [] }) =
     {
       id: 10,
       name: "Artisanal Mocktail",
-      description: "Non-alcoholic craft beverage with fresh-pressed juices and house syrups",
+      description: "Sophisticated alcohol-free beverage crafted with cold-pressed organic fruit juices, house-made herb syrups, botanical extracts, sparkling water, and garnished with edible flowers and fresh herbs for a refreshing experience.",
       price: 9.50,
       imageUrl: "https://images.unsplash.com/photo-1619604395920-61d139cd5ee1?auto=format&fit=crop&w=800&q=80",
       category: "beverages",
